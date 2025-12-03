@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 98%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    /* Gradient variables for AuthPage */
+    --grad-1: 220 90% 55%;
+    --grad-2: 270 90% 60%;
+    --grad-3: 320 85% 60%;
+  }
+
+  .dark {
+    --background: 220 9% 7%;
+    --foreground: 210 40% 98%;
+    --card: 220 8% 12%;
+    --card-foreground: 210 40% 98%;
+    --popover: 220 8% 10%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 7% 16%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 220 7% 16%;
+    --muted-foreground: 220 5% 58%;
+    --accent: 220 7% 16%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 220 6% 18%;
+    --input: 220 6% 18%;
+    --ring: 212.7 26.8% 83.9%;
+    /* Dark mode gradient variables */
+    --grad-1: 220 9% 7%;
+    --grad-2: 220 8% 9%;
+    --grad-3: 220 7% 6%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
