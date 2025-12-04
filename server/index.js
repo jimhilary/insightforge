@@ -5,9 +5,32 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// CORS Configuration - Only allow React app to connect
+// CORS Configuration - Allow React app to connect (both dev and production)
 const corsOptions = {
-  origin: 'http://localhost:5173', // Your React app URL
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'http://localhost:5173', // Vite dev server
+      'http://localhost:3000', // Alternative dev port
+      process.env.FRONTEND_URL, // Production frontend URL from env
+      process.env.VITE_FRONTEND_URL, // Alternative env var name
+    ].filter(Boolean); // Remove undefined values
+    
+    // In development, allow any localhost
+    if (process.env.NODE_ENV !== 'production' && origin.includes('localhost')) {
+      return callback(null, true);
+    }
+    
+    // Check if origin is allowed
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn(`⚠️ CORS blocked origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200
 };
@@ -56,9 +79,15 @@ app.use((err, req, res, next) => {
 // Start server
 let server;
 try {
-  server = app.listen(PORT, () => {
-    console.log(`✅ Server is running on http://localhost:${PORT}`);
-    console.log('✅ Server process is alive and listening...');
+  server = app.listen(PORT, '0.0.0.0', () => {
+    const env = process.env.NODE_ENV || 'development';
+    console.log(`✅ Server is running on port ${PORT}`);
+    console.log(`✅ Environment: ${env}`);
+    if (env === 'production') {
+      console.log(`✅ Server is accessible at: ${process.env.RENDER_EXTERNAL_URL || `http://0.0.0.0:${PORT}`}`);
+    } else {
+      console.log(`✅ Server is accessible at: http://localhost:${PORT}`);
+    }
     console.log('✅ Press Ctrl+C to stop the server');
     
     // Keep-alive ping every 30 seconds (only in dev)
