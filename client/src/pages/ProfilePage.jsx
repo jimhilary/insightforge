@@ -34,8 +34,12 @@ const ProfilePage = () => {
       // 1. Delete all user data from backend (projects, research, documents, reports)
       const token = useAuthStore.getState().token;
       const currentUser = auth.currentUser;
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const deleteUrl = `${apiUrl}/api/auth/delete-account`;
+      // Note: VITE_API_URL can be set with or without /api
+      // If it includes /api (like api.js expects), we use it directly
+      // If it doesn't, we add /api (backwards compatibility)
+      const envApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const apiBase = envApiUrl.endsWith('/api') ? envApiUrl : `${envApiUrl}/api`;
+      const deleteUrl = `${apiBase}/auth/delete-account`;
       
       console.log('═══════════════════════════════════════════════════════');
       console.log('🗑️ CLIENT: Starting account deletion');

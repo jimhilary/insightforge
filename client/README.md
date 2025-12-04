@@ -1,16 +1,115 @@
-# React + Vite
+# InsightForge Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite frontend for the InsightForge application.
 
-Currently, two official plugins are available:
+## Quick Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Local Development
 
-## React Compiler
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+2. **Set up environment variables:**
+   Create a `.env` file in the `client` directory:
+   ```env
+   VITE_API_URL=http://localhost:5000/api
+   ```
 
-## Expanding the ESLint configuration
+3. **Start development server:**
+   ```bash
+   npm run dev
+   ```
+   The app will be available at `http://localhost:5173`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Build for Production
+
+```bash
+npm run build
+```
+
+This creates a `dist` folder with the production build.
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+## Environment Variables
+
+| Variable | Required | Description | Default |
+|----------|----------|-------------|---------|
+| `VITE_API_URL` | Yes (production) | Backend API base URL | `http://localhost:5000/api` |
+
+**Note:** In production (Netlify), set `VITE_API_URL` to your Render backend URL:
+```
+VITE_API_URL=https://your-backend.onrender.com/api
+```
+
+## Deployment
+
+📖 **See [NETLIFY_DEPLOYMENT.md](./NETLIFY_DEPLOYMENT.md) for detailed Netlify deployment instructions.**
+
+## Project Structure
+
+```
+client/
+├── public/
+│   ├── _redirects      # Netlify SPA routing config
+│   └── vite.svg
+├── src/
+│   ├── components/     # React components
+│   ├── context/        # React contexts
+│   ├── hooks/          # Custom React hooks
+│   ├── lib/            # Utilities & Firebase config
+│   ├── pages/          # Page components
+│   ├── services/       # API services
+│   ├── store/          # Zustand state management
+│   ├── App.jsx         # Main app component
+│   └── main.jsx        # Entry point
+├── index.html
+└── vite.config.js
+```
+
+## Tech Stack
+
+- **React 19** - UI framework
+- **Vite 7** - Build tool
+- **React Router** - Routing
+- **Zustand** - State management
+- **Firebase Auth** - Authentication
+- **Axios** - HTTP client
+- **Tailwind CSS** - Styling
+- **shadcn/ui** - UI components
+
+## Important Files
+
+### `public/_redirects`
+Required for Netlify SPA routing. Ensures all routes serve `index.html`.
+
+### `src/services/api.js`
+Main API configuration. Uses `VITE_API_URL` environment variable.
+
+### `src/lib/firebase.js`
+Firebase client configuration for authentication.
+
+## Troubleshooting
+
+**Build fails:**
+- Ensure Node.js version is 20.19+ or 22.12+ (Vite requirement)
+- Run `npm install` to ensure dependencies are installed
+- Check for syntax errors in console
+
+**API calls fail:**
+- Verify `VITE_API_URL` is set correctly
+- Check that backend is running and accessible
+- Verify CORS is configured on backend
+
+**Routing doesn't work on Netlify:**
+- Ensure `public/_redirects` file exists with: `/* /index.html 200`
+
+**Firebase auth errors:**
+- Verify Firebase config in `src/lib/firebase.js`
+- Check Firebase console for project settings
