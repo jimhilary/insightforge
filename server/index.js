@@ -52,7 +52,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// Health check
+// Root health check (for Render and other health check services)
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', message: 'Server is running' });
+});
+
+// API health check (for application use)
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Server is running' });
 });
